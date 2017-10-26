@@ -16,9 +16,9 @@ class JConfig {
 	public $user = 'root';
 	public $password = '';
 	public $db = 'jmstore';
-	public $dbprefix = 'kdrys_';
+	public $dbprefix = 'vhabe_';
 	public $live_site = '';
-	public $secret = 'dtQTsZL75TKog577';
+	public $secret = 'crPhKbNsi5NeqUwb';
 	public $gzip = '0';
 	public $error_reporting = 'default';
 	public $helpurl = 'https://help.joomla.org/proxy?keyref=Help{major}{minor}:{keyref}&lang={langcode}';
@@ -58,8 +58,9 @@ class JConfig {
 	public $feed_email = 'none';
 	public $log_path = 'D:\\domains\\jmstore\\administrator/logs';
 	public $tmp_path = 'D:\\domains\\jmstore/tmp';
-	public $lifetime = '1000';
+	public $lifetime = '300';
 	public $session_handler = 'database';
+	public $shared_session = '0';
 	public $memcache_persist = '1';
 	public $memcache_compress = '0';
 	public $memcache_server_host = 'localhost';
@@ -90,7 +91,6 @@ class JConfig {
 	public $session_memcached_server_port = '11211';
 	public $session_redis_server_host = 'localhost';
 	public $session_redis_server_port = '6379';
-	public $shared_session = '0';
 	public $frontediting = '1';
 	public $cookie_domain = '';
 	public $cookie_path = '';

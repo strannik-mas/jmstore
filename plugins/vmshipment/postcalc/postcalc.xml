@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension version="3.2" type="plugin" group="vmshipment" method="upgrade">
+    <name>PostCalc</name>
+    <creationDate>1 November 2014</creationDate>
+    <author>esmark</author>
+    <authorUrl>http://www.esmark.ru</authorUrl>
+	<authorEmail>esmark@mail.ru</authorEmail>
+    <copyright>Copyright (C) 2010-2014 esmark.ru. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+    <version>1.2.0</version>
+    <description>PostCalc (Russianpost and EMS-post) Shipment plugin working with postcalc.ru API service.</description>
+    <languages folder="language">
+		<language tag="ru-RU">ru-RU.plg_vmshipment_postcalc.ini</language>
+    </languages>
+    <files>
+		<filename plugin="postcalc">postcalc.php</filename>
+ 		<filename>index.html</filename>
+   </files>
+	<scriptfile>install.postcalc.php</scriptfile>
+    <media folder="images" destination="../images/stories/virtuemart/shipment">
+		<filename>ruspost.gif</filename>
+		<filename>emspost.gif</filename>
+    </media>
+    <vmconfig>
+        <fields name="params">
+            <fieldset name="template">
+				<field name="shipment_logos" type="vmfiles" directory="/images/stories/virtuemart/shipment"
+                       hide_none="1" label="VMSHIPMENT_WEIGHT_COUNTRIES_LOGOS"
+                       size="40"
+                       description="VMSHIPMENT_WEIGHT_COUNTRIES_LOGOS_DESC"/>
+            </fieldset>
+            <fieldset name="fee">
+				<field name="postcalc_delivery" type="list" default="0" label="VMSHIPMENT_POSTCALC_DELIVERY" description="VMSHIPMENT_POSTCALC_DELIVERY_DESC">
+					<option value="0">JSELECT</option>
+					<option value="ПростаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_SIMPLE</option>
+					<option value="ЗаказнаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_REGISTERED</option>
+					<option value="ЦеннаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_GROUND</option>
+					<option value="ЦеннаяАвиаБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_AVIA</option>
+					<option value="ЗаказнаяБандероль1Класс">VMSHIPMENT_RUSSIAN_POSTPACKET_FIRSTCLASS_REGISTERED</option>
+					<option value="ЦеннаяБандероль1Класс">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_FIRSTCLASS</option>
+					<option value="ЦеннаяПосылка">VMSHIPMENT_RUSSIAN_PACKAGE_GROUND</option>
+					<option value="ЦеннаяАвиаПосылка">VMSHIPMENT_RUSSIAN_PACKAGE_AVIA</option>
+					<option value="EMS">VMSHIPMENT_RUSSIAN_EMSPOST_DELIVERY</option>
+					<option value="МждМешокМ">VMSHIPMENT_INERNATIONAL_BAG_GROUND</option>
+					<option value="МждМешокМЗаказной">VMSHIPMENT_INERNATIONAL_BAG_GROUND_REGISTRERED</option>
+					<option value="МждМешокМАвиа">VMSHIPMENT_INERNATIONAL_BAG_AVIA</option>
+					<option value="МждМешокМАвиаЗаказной">VMSHIPMENT_INERNATIONAL_BAG_AVIA_REGISTRERED</option>
+					<option value="МждБандероль">VMSHIPMENT_INERNATIONAL_POSTPACKET_GROUND</option>
+					<option value="МждБандерольЗаказная">VMSHIPMENT_INERNATIONAL_POSTPACKET_GROUND_REGISTRERED</option>
+					<option value="МждБандерольАвиа">VMSHIPMENT_INERNATIONAL_POSTPACKET_AVIA</option>
+					<option value="МждБандерольАвиаЗаказная">VMSHIPMENT_INERNATIONAL_POSTPACKET_AVIA_REGISTRERED</option>
+					<option value="МждМелкийПакет">VMSHIPMENT_INERNATIONAL_SMALLPACKET_GROUND</option>
+					<option value="МждМелкийПакетЗаказной">VMSHIPMENT_INERNATIONAL_SMALLPACKET_GROUND_REGISTRERED</option>
+					<option value="МждМелкийПакетАвиа">VMSHIPMENT_INERNATIONAL_SMALLPACKET_AVIA</option>
+					<option value="МждМелкийПакетАвиаЗаказной">VMSHIPMENT_INERNATIONAL_SMALLPACKET_AVIA_REGISTRERED</option>
+					<option value="EMS_МждДокументы">VMSHIPMENT_INERNATIONAL_EMSPOST_DELIVERY_DOCS</option>
+					<option value="EMS_МждТовары">VMSHIPMENT_INERNATIONAL_EMSPOST_DELIVERY_GOODS</option>
+				</field>
+				<field name="postcalc_valuation" type="radio" default="0" label="VMSHIPMENT_POSTCALC_VALUATION" description="VMSHIPMENT_POSTCALC_VALUATION_DESC">
+				    <option value="0">COM_VIRTUEMART_NO</option>
+				    <option value="1">COM_VIRTUEMART_YES</option>
+				</field>
+				<field name="postcalc_payment_forward" type="radio" default="0" label="VMSHIPMENT_POSTCALC_PAYMENT_FORWARD" description="VMSHIPMENT_POSTCALC_PAYMENT_FORWARD_DESC">
+				    <option value="0">COM_VIRTUEMART_NO</option>
+				    <option value="1">COM_VIRTUEMART_YES</option>
+				</field>
+				<field name="postcalc_extra" type="text"  label="VMSHIPMENT_POSTCALC_EXTRA" description="VMSHIPMENT_POSTCALC_EXTRA_DESC" />
+				<field name="postcalc_order_amount" type="text" label="VMSHIPMENT_POSTCALC_ORDER_AMOUNT" description="VMSHIPMENT_POSTCALC_ORDER_AMOUNT_DESC" />
+				<field name="postcalc_free_shipment" type="text" label="VMSHIPMENT_POSTCALC_FREE_SHIPPING_AMOUNT" description="VMSHIPMENT_POSTCALC_FREE_SHIPPING_AMOUNT_DESC" />
+            </fieldset>
+            <fieldset name="contacts">
+				<field name="postcalc_email_admin" type="text" default=""  label="VMSHIPMENT_POSTCALC_EMAIL_ADMIN" description="VMSHIPMENT_POSTCALC_EMAIL_ADMIN_DESC" />
+            </fieldset>
+            <fieldset name="restrictions">
+				<field type="spacer" default="VMSHIPMENT_POSTCALC_RULES_DELIVERY" level="level1" />
+				<field name="postcalc_countries" type="vmcountries"  scope="com_virtuemart" default="" label="VMSHIPMENT_POSTCALC_COUNTRIES" description="VMSHIPMENT_POSTCALC_COUNTRIES_DESC"/>
+				<field name="postcalc_states" type="text" size="10" default="" label="VMSHIPMENT_POSTCALC_STATES" description="VMSHIPMENT_POSTCALC_STATES_DESC"/>
+				<field name="postcalc_except" type="list" default="0" label="VMSHIPMENT_POSTCALC_EXCEPT" description="VMSHIPMENT_POSTCALC_EXCEPT_DESC">
+				    <option value="0">VMSHIPMENT_POSTCALC_NOTEXCEPT</option>
+				    <option value="S">VMSHIPMENT_POSTCALC_STATE</option>
+				    <option value="C">VMSHIPMENT_POSTCALC_CITY</option>
+				</field>
+				<field name="postcalc_weight_limit" type="radio" default="1" label="VMSHIPMENT_POSTCALC_WEIGHT_LIMIT" description="VMSHIPMENT_POSTCALC_WEIGHT_LIMIT_DESC">		
+				    <option value="0">COM_VIRTUEMART_NO</option>
+				    <option value="1">COM_VIRTUEMART_YES</option>
+				</field>
+				<field name="postcalc_categoties" type="text" size="10" default="" label="VMSHIPMENT_POSTCALC_CATEGORIES" description="VMSHIPMENT_POSTCALC_CATEGORIES_DESC"/>
+            </fieldset>
+        </fields>
+    </vmconfig>
+	
+	
+	 <params addpath="/administrator/components/com_virtuemart/elements">
+		<param type="vmjpluginwarning" />
+		<param type="spacer" default="VMSHIPMENT_POSTCALC_SETTINGS" level="level1" />
+		<param name="shipment_logos" type="vmfiles" label="VMSHIPMENT_POSTCALC_LOGOS"
+	             	description="VMSHIPMENT_POSTCALC_LOGOS_DESC"
+	             	directory="/images/stories/virtuemart/shipment"
+	             	default="ruspost.gif" hide_default="1" hide_none="1"
+	             	stripext="0"   exclude="^_" />
+		<param name="postcalc_delivery" type="list" default="0" label="VMSHIPMENT_POSTCALC_DELIVERY" description="VMSHIPMENT_POSTCALC_DELIVERY_DESC">
+		  <option value="0">JSELECT</option>
+		  <option value="ПростаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_SIMPLE</option>
+		  <option value="ЗаказнаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_REGISTERED</option>
+		  <option value="ЦеннаяБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_GROUND</option>
+		  <option value="ЦеннаяАвиаБандероль">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_AVIA</option>
+		  <option value="ЗаказнаяБандероль1Класс">VMSHIPMENT_RUSSIAN_POSTPACKET_FIRSTCLASS_REGISTERED</option>
+		  <option value="ЦеннаяБандероль1Класс">VMSHIPMENT_RUSSIAN_POSTPACKET_VALUE_FIRSTCLASS</option>
+		  <option value="ЦеннаяПосылка">VMSHIPMENT_RUSSIAN_PACKAGE_GROUND</option>
+		  <option value="ЦеннаяАвиаПосылка">VMSHIPMENT_RUSSIAN_PACKAGE_AVIA</option>
+		  <option value="EMS">VMSHIPMENT_RUSSIAN_EMSPOST_DELIVERY</option>
+		  <option value="МждМешокМ">VMSHIPMENT_INERNATIONAL_BAG_GROUND</option>
+		  <option value="МждМешокМЗаказной">VMSHIPMENT_INERNATIONAL_BAG_GROUND_REGISTRERED</option>
+		  <option value="МждМешокМАвиа">VMSHIPMENT_INERNATIONAL_BAG_AVIA</option>
+		  <option value="МждМешокМАвиаЗаказной">VMSHIPMENT_INERNATIONAL_BAG_AVIA_REGISTRERED</option>
+		  <option value="МждБандероль">VMSHIPMENT_INERNATIONAL_POSTPACKET_GROUND</option>
+		  <option value="МждБандерольЗаказная">VMSHIPMENT_INERNATIONAL_POSTPACKET_GROUND_REGISTRERED</option>
+		  <option value="МждБандерольАвиа">VMSHIPMENT_INERNATIONAL_POSTPACKET_AVIA</option>
+		  <option value="МждБандерольАвиаЗаказная">VMSHIPMENT_INERNATIONAL_POSTPACKET_AVIA_REGISTRERED</option>
+		  <option value="МждМелкийПакет">VMSHIPMENT_INERNATIONAL_SMALLPACKET_GROUND</option>
+		  <option value="МждМелкийПакетЗаказной">VMSHIPMENT_INERNATIONAL_SMALLPACKET_GROUND_REGISTRERED</option>
+		  <option value="МждМелкийПакетАвиа">VMSHIPMENT_INERNATIONAL_SMALLPACKET_AVIA</option>
+		  <option value="МждМелкийПакетАвиаЗаказной">VMSHIPMENT_INERNATIONAL_SMALLPACKET_AVIA_REGISTRERED</option>
+		  <option value="EMS_МждДокументы">VMSHIPMENT_INERNATIONAL_EMSPOST_DELIVERY_DOCS</option>
+		  <option value="EMS_МждТовары">VMSHIPMENT_INERNATIONAL_EMSPOST_DELIVERY_GOODS</option>
+		</param>
+		<param name="postcalc_valuation" type="radio" default="0" label="VMSHIPMENT_POSTCALC_VALUATION" description="VMSHIPMENT_POSTCALC_VALUATION_DESC">
+		    <option value="0">COM_VIRTUEMART_NO</option>
+		    <option value="1">COM_VIRTUEMART_YES</option>
+		</param>
+		<param name="postcalc_payment_forward" type="radio" default="0" label="VMSHIPMENT_POSTCALC_PAYMENT_FORWARD" description="VMSHIPMENT_POSTCALC_PAYMENT_FORWARD_DESC">
+		    <option value="0">COM_VIRTUEMART_NO</option>
+		    <option value="1">COM_VIRTUEMART_YES</option>
+		</param>
+		<param name="postcalc_extra" type="text"  label="VMSHIPMENT_POSTCALC_EXTRA" description="VMSHIPMENT_POSTCALC_EXTRA_DESC" />
+		<param name="free_shipment" type="text" label="VMSHIPMENT_POSTCALC_FREE_SHIPPING_AMOUNT" description="VMSHIPMENT_POSTCALC_FREE_SHIPPING_AMOUNT_DESC" />
+		
+		<param name="postcalc_email_admin" type="text" default=""  label="VMSHIPMENT_POSTCALC_EMAIL_ADMIN" description="VMSHIPMENT_POSTCALC_EMAIL_ADMIN_DESC" />
+        <param name="postcalc_name_admin" type="text" default="" label="VMSHIPMENT_POSTCALC_NAME_ADMIN" description="VMSHIPMENT_POSTCALC_NAME_ADMIN_DESC" />
+
+		<param type="spacer" default="VMSHIPMENT_POSTCALC_RULES_DELIVERY" level="level1" />
+		<param name="postcalc_countries" type="vmcountries"  scope="com_virtuemart" default="" label="VMSHIPMENT_POSTCALC_COUNTRIES" description="VMSHIPMENT_POSTCALC_COUNTRIES_DESC"/>
+		<param name="postcalc_states" type="text" size="10" default="" label="VMSHIPMENT_POSTCALC_STATES" description="VMSHIPMENT_POSTCALC_STATES_DESC"/>
+		<param name="postcalc_except" type="list" default="0" label="VMSHIPMENT_POSTCALC_EXCEPT" description="VMSHIPMENT_POSTCALC_EXCEPT_DESC">
+		    <option value="0">VMSHIPMENT_POSTCALC_NOTEXCEPT</option>
+		    <option value="S">VMSHIPMENT_POSTCALC_STATE</option>
+		    <option value="C">VMSHIPMENT_POSTCALC_CITY</option>
+		</param>
+		<param name="postcalc_weight_limit" type="radio" default="1" label="VMSHIPMENT_POSTCALC_WEIGHT_LIMIT" description="VMSHIPMENT_POSTCALC_WEIGHT_LIMIT_DESC">		
+		    <option value="0">COM_VIRTUEMART_NO</option>
+		    <option value="1">COM_VIRTUEMART_YES</option>
+		</param>
+	</params>
+	
+	
+	
+	
+	
+	
+    <updateservers>
+        <!-- Note: No spaces or linebreaks allowed between the server tags -->
+     </updateservers>
+</extension>
